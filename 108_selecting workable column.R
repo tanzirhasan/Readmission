@@ -14,6 +14,6 @@ colnames(ZSFGH_d)
 head(ZSFGH_d)
 View(ZSFGH_d)
 ZSFGH_d%>% distinct(ZipCode)
-ZSFGH_e <- mutate(ZSFGH_d, status=as.factor(ifelse(Interval>0,1,0))) # adding a variable status as  is the response variable
+ZSFGH_e <- mutate(ZSFGH_d, status=as.factor(ifelse(Interval <30 & Interval >0,1,0))) # adding a variable status as  is the response variable
 
-str(ZSFGH_d)
+str(ZSFGH_e)
