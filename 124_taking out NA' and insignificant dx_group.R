@@ -1,9 +1,4 @@
-# Function for scoring
-#risk_score
-riskcalculation<-function(){
-  risk_score <- 0
 
-}
 
 colnames(ZSFGH_h)
 
@@ -21,6 +16,27 @@ ZSFGH_x <-ZSFGH_i[(duplicated(ZSFGH_i$MRN, fromLast = FALSE)|duplicated(ZSFGH_i$
 nrow(ZSFGH_x)
 #3182
 
-ZSFGH_x %>%group_by(MRN)%>% slice(which.min(Interval))
+nrow(ZSFGH_x %>%group_by(MRN)%>% slice(which.min(Interval)))
 
 View(ZSFGH_x %>%group_by(MRN))
+
+
+ZSFGH_x %>%group_by(MRN)%>% filter(MRN=="78088")%>% slice(which.min(Interval))
+
+
+
+ZSFGH_x %>%group_by(MRN)%>% filter(status=="Readmitted")%>%select(MRN)%>%as.vector 
+catch <-ZSFGH_x%>% filter(status=="Readmitted")%>%select(MRN)%>%sapply(as.vector) 
+
+ZSFGH_x %>%group_by(MRN)%>% filter(MRN=="78088")%>% slice(which.min(Interval))
+catch
+class(catch)
+length(catch)
+#906
+"78088" %in% catch
+View(ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Interval)))
+nrow(ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Interval)))
+# 593
+data_mod_raw <- ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Interval))
+data_mod <- data_mod_raw[c(-1,-2)]
+head(data_mod)
