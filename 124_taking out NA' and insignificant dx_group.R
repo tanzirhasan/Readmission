@@ -38,5 +38,29 @@ View(ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Inter
 nrow(ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Interval)))
 # 593
 data_mod_raw <- ZSFGH_x %>% group_by(MRN)%>%filter(MRN %in% catch)%>% slice(which.min(Interval))
-data_mod <- data_mod_raw[c(-1,-2)]
+data_mod_raw1 <- as.data.frame(data_mod_raw)
+data_mod_raw1$ulti_stat <-rep(1,nrow(data_mod_raw))
+class(data_mod_raw1)
+data_rest <-ZSFGH_x[!(ZSFGH_x$MRN %in%catch),] 
+View(data_rest)
+data_rest1 <- subset(data_rest, data_rest$Interval== 0)
+class(data_mod_raw1)
+class(data_rest1)
+data_rest1$ulti_stat <- rep(0,nrow(data_rest1))
+
+data_inter <- rbind(data_mod_raw1, data_rest1)
+View(data_inter)
+data_inter$ulti_stat <- as.factor(data_inter$ulti_stat)
+
+
+View(data_inter)
+
+nrow(data_inter)
+colnames(data_inter)
+
+
+data_mod <- data_inter[c(-1,-2, -5,-14, -16)]
 head(data_mod)
+
+write.csv(data_mod, "data_mod.csv", row.names = FALSE)
+
